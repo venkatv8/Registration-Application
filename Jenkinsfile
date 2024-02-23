@@ -1,11 +1,11 @@
 pipeline {
-    agent { label 'Jenkins-Agent' }
+    agent { label 'dev' }
     tools {
         jdk 'Java17'
         maven 'Maven3'
     }
     environment {
-        APP_NAME = "RegisterApp"
+        APP_NAME = "registrationapp"
         RELEASE = "1.0.0"
         DOCKER_USER = "venky0123"
         DOCKER_PASS = 'dockerhub'
@@ -59,7 +59,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('',DOCKER_PASS) {
-                        docker_image = docker.build("${IMAGE_NAME}", "-f Dockerfile .")
+                        docker_image = docker.build "${IMAGE_NAME}"
                     }   
                        docker.withRegistry('',DOCKER_PASS) {
                         docker_image.push("${IMAGE_TAG}")
